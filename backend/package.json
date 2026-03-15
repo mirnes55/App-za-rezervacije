@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npx prisma generate && tsc",
+    "build": "npx prisma generate && tsc && node -e \"require('fs').cpSync('src/generated', 'dist/generated', {recursive: true})\"",
     "start": "npx prisma migrate deploy && node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "seed": "ts-node-dev --transpile-only prisma/seed.ts"
