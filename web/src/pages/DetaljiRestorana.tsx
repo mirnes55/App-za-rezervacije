@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { restaurants, reservations, type Restaurant } from "../api";
 import { useAuth } from "../context/AuthContext";
 
