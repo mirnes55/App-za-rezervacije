@@ -31,6 +31,8 @@ Web i Android aplikacija za online rezervacije stolova. Restorani mogu dodavati 
 
 Za brzi deploy da možete isprobati i pokazati partnerima: **web** na [Vercel](https://vercel.com), **backend + PostgreSQL** na [Railway](https://railway.app). Korak-po-korak upute: **[DEPLOY.md](DEPLOY.md)**.
 
+**Railway:** Za backend servis obavezno postavi **Root Directory** na `backend`, inače build neće naći `package.json`.
+
 ## Struktura
 
 - `backend/` – Node.js (Express + TypeScript), Prisma ORM, PostgreSQL. API: auth, restorani, rasporedi, stolovi, rezervacije.

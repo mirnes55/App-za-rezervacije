@@ -14,6 +14,9 @@ web/dist/
 .expo/
 web-build/
 
+# Root package.json has no deps
+package-lock.json
+
 # IDE / OS
 .DS_Store
 *.log

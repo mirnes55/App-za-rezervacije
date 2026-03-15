@@ -1,0 +1,12 @@
+{
+  "name": "app-za-rezervacije",
+  "private": true,
+  "description": "Web i Android app za rezervacije restorana (bosanski)",
+  "scripts": {
+    "dev:backend": "cd backend && npm run dev",
+    "dev:web": "cd web && npm run dev",
+    "dev:mobile": "cd mobile && npx expo start",
+    "build:backend": "cd backend && npm run build",
+    "build:web": "cd web && npm run build"
+  }
+}
