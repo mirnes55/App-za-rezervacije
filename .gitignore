@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build / generated
+dist/
+backend/dist/
+backend/src/generated/
+web/dist/
+.expo/
+web-build/
+
+# IDE / OS
+.DS_Store
+*.log
+.idea
+.vscode/
+
+# Expo / mobile
+mobile/.expo/
+mobile/dist/
+mobile/android/
+mobile/ios/
+*.tsbuildinfo

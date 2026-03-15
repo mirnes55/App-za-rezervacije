@@ -1,0 +1,109 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  VLASNIK
+  GOST
+}
+
+enum ReservationStatus {
+  NA_CEKANJU
+  POTVRDJENA
+  OTAKZANA
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String  @map("password_hash")
+  ime          String
+  prezime      String
+  role         Role     @default(GOST)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  ownedRestaurants Restaurant[]
+  reservations     Reservation[]
+
+  @@map("users")
+}
+
+model Restaurant {
+  id            String   @id @default(cuid())
+  ownerId       String   @map("owner_id")
+  naziv         String
+  opis          String?
+  adresa        String?
+  grad          String?
+  radnoVrijeme  String?  @map("radno_vrijeme")
+  telefon       String?
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  owner       User         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  floorPlans  FloorPlan[]
+  reservations Reservation[]
+
+  @@map("restaurants")
+}
+
+model FloorPlan {
+  id           String   @id @default(cuid())
+  restaurantId String   @map("restaurant_id")
+  naziv        String
+  width        Int      @default(10)
+  height       Int      @default(10)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  tables     Table[]
+
+  @@map("floor_plans")
+}
+
+model Table {
+  id          String   @id @default(cuid())
+  floorPlanId String   @map("floor_plan_id")
+  naziv       String
+  kapacitet   Int
+  positionX   Int      @map("position_x")
+  positionY   Int      @map("position_y")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  floorPlan    FloorPlan     @relation(fields: [floorPlanId], references: [id], onDelete: Cascade)
+  reservations Reservation[]
+
+  @@map("tables")
+}
+
+model Reservation {
+  id               String           @id @default(cuid())
+  restaurantId     String           @map("restaurant_id")
+  tableId          String?          @map("table_id")
+  userId           String           @map("user_id")
+  brojOsoba        Int              @map("broj_osoba")
+  datumVrijemeOd   DateTime         @map("datum_vrijeme_od")
+  datumVrijemeDo   DateTime         @map("datum_vrijeme_do")
+  status           ReservationStatus @default(NA_CEKANJU)
+  napomena         String?
+  createdAt        DateTime         @default(now()) @map("created_at")
+  updatedAt        DateTime         @updatedAt @map("updated_at")
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  table      Table?     @relation(fields: [tableId], references: [id], onDelete: SetNull)
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("reservations")
+}
