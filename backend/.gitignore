@@ -3,3 +3,9 @@ node_modules
 .env
 
 /src/generated/prisma
+
+# Compiled Prisma config (use .mjs in repo for Railway/build)
+prisma.config.js
+prisma.config.js.map
+prisma.config.d.ts
+prisma.config.d.ts.map
